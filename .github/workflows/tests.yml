@@ -32,9 +32,6 @@ jobs:
           tools: composer:v2
           coverage: xdebug
 
-      - name: Install jq
-        run: sudo apt-get install jq
-
       - name: Set up Node & NPM
         uses: actions/setup-node@v2
         with:
@@ -46,7 +43,7 @@ jobs:
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
       - name: Create auth.json file
-        run: echo "${{ secrets.FLUXUI_AUTH_JSON }}" | jq . > ~/.composer/auth.json
+        run: echo '${{ secrets.FLUXUI_AUTH_JSON }}' > ~/.composer/auth.json
 
       - name: Install PHP dependencies
         run: composer install --no-interaction --no-progress --ansi
