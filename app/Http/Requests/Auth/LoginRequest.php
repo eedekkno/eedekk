@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Auth\Events\Lockout;
@@ -56,6 +58,8 @@ class LoginRequest extends FormRequest
      * Ensure the login request is not rate limited.
      *
      * @throws \Illuminate\Validation\ValidationException
+     *
+     * @codeCoverageIgnore
      */
     public function ensureIsNotRateLimited(): void
     {
