@@ -7,7 +7,7 @@ use App\Models\User;
 
 use function Pest\Laravel\assertDatabaseEmpty;
 
-it('removes all team attachments when deleted', function () {
+it('removes all team attachments when deleted', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach(Team::factory()->create());
     $user->teams()->attach(Team::factory()->create());

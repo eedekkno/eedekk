@@ -31,11 +31,17 @@ class Team extends Model
         'subscription_ends_at',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\User, $this>
+     */
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\TeamInvite, $this>
+     */
     public function invites(): HasMany
     {
         return $this->hasMany(TeamInvite::class);

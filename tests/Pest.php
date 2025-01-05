@@ -19,7 +19,7 @@ use Database\Seeders\MemberRoleSeeder;
 pest()->extend(Tests\TestCase::class)
     ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('Feature')
-    ->beforeEach(function () {
+    ->beforeEach(function (): void {
         $this->seed([
             AdminRoleSeeder::class,
             MemberRoleSeeder::class,

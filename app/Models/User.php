@@ -45,6 +45,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Team, $this>
+     */
     public function teams(): BelongsToMany
     {
         return $this->belongsToMany(Team::class);

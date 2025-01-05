@@ -14,7 +14,7 @@ class TeamMemberController extends Controller
     public function update(TeamMemberUpdateRequest $request, Team $team, User $user)
     {
         if ($request->has('role')) {
-            tap($team->users->find($user), function (User $member) use ($request) {
+            tap($team->users->find($user), function (User $member) use ($request): void {
                 $member->roles()->detach();
                 $member->assignRole($request->role);
             });

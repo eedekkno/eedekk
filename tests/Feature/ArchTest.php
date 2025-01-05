@@ -29,8 +29,8 @@ arch('app')
 arch()
     ->expect('App\Models')
     ->toBeClasses()
-    ->toExtend('Illuminate\Database\Eloquent\Model')
-    ->ignoring('App\Models\User');
+    ->toExtend(\Illuminate\Database\Eloquent\Model::class)
+    ->ignoring(\App\Models\User::class);
 
 arch()
     ->expect('App\Http')

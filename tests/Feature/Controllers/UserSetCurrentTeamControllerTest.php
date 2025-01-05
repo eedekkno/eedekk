@@ -7,7 +7,7 @@ use App\Models\User;
 
 use function Pest\Laravel\actingAs;
 
-it('associates the user with the given team and redirects back', function () {
+it('associates the user with the given team and redirects back', function (): void {
     $user = User::factory()->has(Team::factory()->count(2))->create();
     $team = $user->teams->first();
 
@@ -19,7 +19,7 @@ it('associates the user with the given team and redirects back', function () {
         ->toBe($team->id);
 });
 
-it('throws validation error for invalid team', function () {
+it('throws validation error for invalid team', function (): void {
     $user = User::factory()->create();
     $team = Team::factory()->create();
 

@@ -9,7 +9,7 @@ use App\Models\User;
 
 use function Pest\Laravel\actingAs;
 
-it('can remove a member from the team', function () {
+it('can remove a member from the team', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach($team = Team::factory()->create());
     $user->team()->associate($team)->save();
@@ -35,7 +35,7 @@ it('can remove a member from the team', function () {
         ->toHaveCount(0);
 });
 
-it('can not remove a member from the team without permission', function () {
+it('can not remove a member from the team without permission', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach($team = Team::factory()->create());
     $user->team()->associate($team)->save();
@@ -58,7 +58,7 @@ it('can not remove a member from the team without permission', function () {
         ->assertForbidden();
 });
 
-it('can not remove self from team', function () {
+it('can not remove self from team', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach($team = Team::factory()->create());
     $user->team()->associate($team)->save();
@@ -72,7 +72,7 @@ it('can not remove self from team', function () {
         ->assertForbidden();
 });
 
-it('updates a role', function () {
+it('updates a role', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach($team = Team::factory()->create());
     $user->team()->associate($team)->save();
@@ -98,7 +98,7 @@ it('updates a role', function () {
         ->toBe(1);
 });
 
-it('only updates role if provided', function () {
+it('only updates role if provided', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach($team = Team::factory()->create());
     $user->team()->associate($team)->save();
@@ -124,7 +124,7 @@ it('only updates role if provided', function () {
         ->toBe(1);
 });
 
-it('does not update the role if no permission', function () {
+it('does not update the role if no permission', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach($team = Team::factory()->create());
     $user->team()->associate($team)->save();
@@ -146,7 +146,7 @@ it('does not update the role if no permission', function () {
 
 });
 
-it('does not update the user if they are not in the team', function () {
+it('does not update the user if they are not in the team', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach($team = Team::factory()->create());
     $user->team()->associate($team)->save();
@@ -168,7 +168,7 @@ it('does not update the user if they are not in the team', function () {
         ->assertForbidden();
 });
 
-it('validates the role to make sure it exists', function () {
+it('validates the role to make sure it exists', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach($team = Team::factory()->create());
     $user->team()->associate($team)->save();

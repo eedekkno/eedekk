@@ -9,15 +9,11 @@ use App\Http\Controllers\TeamMemberController;
 use App\Http\Controllers\UserSetCurrentTeamController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', fn () => view('welcome'));
 
-Route::get('dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('dashboard', fn () => view('dashboard'))->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->group(function (): void {
     Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -37,6 +33,4 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('coverage', function () {
-    return response()->file(public_path('coverage/index.html'));
-});
+Route::get('coverage', fn () => response()->file(public_path('coverage/index.html')));

@@ -20,11 +20,17 @@ class TeamInvite extends Model
         'token',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, $this>
+     */
     public function invitedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'invited_by');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Team, $this>
+     */
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
