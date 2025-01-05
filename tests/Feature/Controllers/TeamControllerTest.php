@@ -9,7 +9,7 @@ use App\Models\User;
 
 use function Pest\Laravel\actingAs;
 
-it('renders the team creation view', function () {
+it('renders the team creation view', function (): void {
     $user = User::factory()->create();
 
     actingAs($user)
@@ -18,7 +18,7 @@ it('renders the team creation view', function () {
         ->assertViewIs('team.create');
 });
 
-it('can update team', function () {
+it('can update team', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach($team = Team::factory()->create());
     $user->team()->associate($team)->save();
@@ -37,7 +37,7 @@ it('can update team', function () {
         ->toBe($name);
 });
 
-it('can not update if not in team', function () {
+it('can not update if not in team', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach($team = Team::factory()->create());
     $user->team()->associate($team)->save();
@@ -53,7 +53,7 @@ it('can not update if not in team', function () {
         ->assertForbidden();
 });
 
-it('gives the admin role to the team it creates', function () {
+it('gives the admin role to the team it creates', function (): void {
     $user = User::factory()->create();
 
     actingAs($user)
@@ -70,7 +70,7 @@ it('gives the admin role to the team it creates', function () {
         ->toBeTrue();
 });
 
-it('can not update a team without permission', function () {
+it('can not update a team without permission', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach(
         $anotherTeam = Team::factory()->create()
@@ -88,7 +88,7 @@ it('can not update a team without permission', function () {
         ->assertForbidden();
 });
 
-it('can leave a team', function () {
+it('can leave a team', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach(Team::factory()->create());
     $user->teams()->attach($teamToLeave = Team::factory()->create());
@@ -106,7 +106,7 @@ it('can leave a team', function () {
         ->not->toEqual($teamToLeave->id);
 });
 
-it('can not leave team if we have one team remaining', function () {
+it('can not leave team if we have one team remaining', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach($team = Team::factory()->create());
     $user->team()->associate($team)->save();
@@ -116,7 +116,7 @@ it('can not leave team if we have one team remaining', function () {
         ->assertForbidden();
 });
 
-it('can not leave a team that we don\'t belong to', function () {
+it('can not leave a team that we don\'t belong to', function (): void {
     $user = User::factory()->create();
     $anotherUser = User::factory()->create();
     $anotherUser->teams()->attach($team = Team::factory()->create());
@@ -127,7 +127,7 @@ it('can not leave a team that we don\'t belong to', function () {
         ->assertForbidden();
 });
 
-it('should show a list of members for admins', function () {
+it('should show a list of members for admins', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach($team = Team::factory()->create());
     $user->team()->associate($team)->save();
@@ -146,7 +146,7 @@ it('should show a list of members for admins', function () {
         ->assertSeeText($members->pluck('name')->toArray());
 });
 
-it('should show a list of members for users', function () {
+it('should show a list of members for users', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach($team = Team::factory()->create());
     $user->team()->associate($team)->save();

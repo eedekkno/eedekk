@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Models\Team;
 use App\Models\User;
 
-it('has teams', function () {
+it('has teams', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach($team = Team::factory()->create());
 

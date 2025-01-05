@@ -6,7 +6,7 @@ use App\Models\User;
 
 use function Pest\Laravel\actingAs;
 
-it('redirects to intended route if email is verified', function () {
+it('redirects to intended route if email is verified', function (): void {
     $user = User::factory()->create();
 
     actingAs($user);
@@ -18,7 +18,7 @@ it('redirects to intended route if email is verified', function () {
     $response->assertRedirect(route('dashboard'));
 });
 
-it('shows the verification view if email is not verified', function () {
+it('shows the verification view if email is not verified', function (): void {
     $user = User::factory()->unverified()->create();
 
     actingAs($user)

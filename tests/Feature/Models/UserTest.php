@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Models\Team;
 use App\Models\User;
 
-it('sets the current team to the personal team', function () {
+it('sets the current team to the personal team', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach($team = Team::factory()->create());
     $user->team()->associate($team)->save();

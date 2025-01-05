@@ -7,7 +7,7 @@ use App\Models\User;
 
 use function Pest\Laravel\actingAs;
 
-it('aborts the request if the user does not belong to the team', function () {
+it('aborts the request if the user does not belong to the team', function (): void {
     $user = User::factory()->create();
     $team = Team::factory()->create();
 

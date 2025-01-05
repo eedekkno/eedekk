@@ -6,27 +6,27 @@ use App\Models\Team;
 use App\Models\User;
 use App\Policies\TeamPolicy;
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->policy = new TeamPolicy;
 });
 
-describe('create', function () {
-    it('allows creating a team', function () {
+describe('create', function (): void {
+    it('allows creating a team', function (): void {
         $user = User::factory()->create();
 
         expect($this->policy->create($user))->toBeTrue();
     });
 });
 
-describe('setCurrentTeam', function () {
-    it('allows setting current team if user belongs to the team', function () {
+describe('setCurrentTeam', function (): void {
+    it('allows setting current team if user belongs to the team', function (): void {
         $user = User::factory()->has(Team::factory())->create();
         $team = $user->teams->first();
 
         expect($this->policy->setCurrentTeam($user, $team))->toBeTrue();
     });
 
-    it('denies setting current team if user does not belong to the team', function () {
+    it('denies setting current team if user does not belong to the team', function (): void {
         $user = User::factory()->create();
         $team = Team::factory()->create();
 
@@ -34,8 +34,8 @@ describe('setCurrentTeam', function () {
     });
 });
 
-describe('update', function () {
-    it('allows updating a team if user has permission', function () {
+describe('update', function (): void {
+    it('allows updating a team if user has permission', function (): void {
         $user = User::factory()->has(Team::factory())->create();
         $team = $user->teams->first();
         setPermissionsTeamId($team->id);
@@ -45,7 +45,7 @@ describe('update', function () {
         expect($this->policy->update($user, $team))->toBeTrue();
     });
 
-    it('denies updating a team if user lacks permission', function () {
+    it('denies updating a team if user lacks permission', function (): void {
         $user = User::factory()->has(Team::factory())->create();
         $team = $user->teams->first();
 
@@ -53,15 +53,15 @@ describe('update', function () {
     });
 });
 
-describe('leave', function () {
-    it('allows leaving a team if user belongs to multiple teams', function () {
+describe('leave', function (): void {
+    it('allows leaving a team if user belongs to multiple teams', function (): void {
         $user = User::factory()->has(Team::factory()->count(2))->create();
         $team = $user->teams->first();
 
         expect($this->policy->leave($user, $team))->toBeTrue();
     });
 
-    it('denies leaving the last team', function () {
+    it('denies leaving the last team', function (): void {
         $user = User::factory()->has(Team::factory())->create();
         $team = $user->teams->first();
 
@@ -69,8 +69,8 @@ describe('leave', function () {
     });
 });
 
-describe('removeTeamMember', function () {
-    it('allows removing a team member if user has permission', function () {
+describe('removeTeamMember', function (): void {
+    it('allows removing a team member if user has permission', function (): void {
         $user = User::factory()->has(Team::factory())->create();
         $team = $user->teams->first();
         $member = User::factory()->create();
@@ -82,14 +82,14 @@ describe('removeTeamMember', function () {
         expect($this->policy->removeTeamMember($user, $team, $member))->toBeTrue();
     });
 
-    it('denies removing a team member if user is the member', function () {
+    it('denies removing a team member if user is the member', function (): void {
         $user = User::factory()->has(Team::factory())->create();
         $team = $user->teams->first();
 
         expect($this->policy->removeTeamMember($user, $team, $user))->toBeFalse();
     });
 
-    it('denies removing a team member if member does not belong to the team', function () {
+    it('denies removing a team member if member does not belong to the team', function (): void {
         $user = User::factory()->has(Team::factory())->create();
         $team = $user->teams->first();
         $member = User::factory()->create();
@@ -98,8 +98,8 @@ describe('removeTeamMember', function () {
     });
 });
 
-describe('inviteToTeam', function () {
-    it('allows inviting to a team if user has permission', function () {
+describe('inviteToTeam', function (): void {
+    it('allows inviting to a team if user has permission', function (): void {
         $user = User::factory()->has(Team::factory())->create();
         $team = $user->teams->first();
 
@@ -109,14 +109,14 @@ describe('inviteToTeam', function () {
         expect($this->policy->inviteToTeam($user, $team))->toBeTrue();
     });
 
-    it('denies inviting to a team if user does not belong to the team', function () {
+    it('denies inviting to a team if user does not belong to the team', function (): void {
         $user = User::factory()->create();
         $team = Team::factory()->create();
 
         expect($this->policy->inviteToTeam($user, $team))->toBeFalse();
     });
 
-    it('denies inviting to a team if user lacks permission', function () {
+    it('denies inviting to a team if user lacks permission', function (): void {
         $user = User::factory()->has(Team::factory())->create();
         $team = $user->teams->first();
 

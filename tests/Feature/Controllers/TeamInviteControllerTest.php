@@ -15,11 +15,11 @@ use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\assertDatabaseMissing;
 
-afterEach(function () {
+afterEach(function (): void {
     Str::createRandomStringsNormally();
 });
 
-it('creates an invite', function () {
+it('creates an invite', function (): void {
     Mail::fake();
 
     $user = User::factory()->create();
@@ -38,10 +38,8 @@ it('creates an invite', function () {
         ])
         ->assertRedirect();
 
-    Mail::assertSent(TeamInvitation::class, function (TeamInvitation $mail) use ($email) {
-        return $mail->hasTo($email) &&
-            $mail->teamInvite->token === 'abc';
-    });
+    Mail::assertSent(TeamInvitation::class, fn (TeamInvitation $mail) => $mail->hasTo($email) &&
+        $mail->teamInvite->token === 'abc');
 
     assertDatabaseHas('team_invites', [
         'team_id' => $user->team->id,
@@ -51,7 +49,7 @@ it('creates an invite', function () {
     ]);
 });
 
-it('requires an email address', function () {
+it('requires an email address', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach($team = Team::factory()->create());
     $user->team()->associate($team)->save();
@@ -65,7 +63,7 @@ it('requires an email address', function () {
         ->assertSessionHasErrors('email');
 });
 
-it('requires an valid email address', function () {
+it('requires an valid email address', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach($team = Team::factory()->create());
     $user->team()->associate($team)->save();
@@ -81,7 +79,7 @@ it('requires an valid email address', function () {
         ->assertSessionHasErrors('email');
 });
 
-it('fails to create invite if email already used', function () {
+it('fails to create invite if email already used', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach($team = Team::factory()->create());
     $user->team()->associate($team)->save();
@@ -102,7 +100,7 @@ it('fails to create invite if email already used', function () {
         ])
         ->assertInvalid();
 });
-it('creates invite if email already invited to another team', function () {
+it('creates invite if email already invited to another team', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach($team = Team::factory()->create());
     $user->team()->associate($team)->save();
@@ -124,7 +122,7 @@ it('creates invite if email already invited to another team', function () {
         ->assertValid();
 });
 
-it('can revoke an invite', function () {
+it('can revoke an invite', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach($team = Team::factory()->create());
     $user->team()->associate($team)->save();
@@ -148,7 +146,7 @@ it('can revoke an invite', function () {
     ]);
 });
 
-it('can not revoke an invite without permission', function () {
+it('can not revoke an invite without permission', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach($team = Team::factory()->create());
     $user->team()->associate($team)->save();
@@ -166,7 +164,7 @@ it('can not revoke an invite without permission', function () {
         ->assertForbidden();
 });
 
-it('fails to accept invite if route is not signed', function () {
+it('fails to accept invite if route is not signed', function (): void {
     $invite = TeamInvite::factory()
         ->for(Team::factory()->create())
         ->create();
@@ -178,7 +176,7 @@ it('fails to accept invite if route is not signed', function () {
         ->assertForbidden();
 });
 
-it('can accept an invite', function () {
+it('can accept an invite', function (): void {
     $invite = TeamInvite::factory()
         ->for(Team::factory()->create())
         ->create();

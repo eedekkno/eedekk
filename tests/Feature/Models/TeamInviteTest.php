@@ -6,7 +6,7 @@ use App\Models\Team;
 use App\Models\TeamInvite;
 use App\Models\User;
 
-it('has fillable properties', function () {
+it('has fillable properties', function (): void {
     $fillable = (new TeamInvite)->getFillable();
 
     expect($fillable)->toBe([
@@ -17,7 +17,7 @@ it('has fillable properties', function () {
     ]);
 });
 
-it('belongs to a user (invitedBy)', function () {
+it('belongs to a user (invitedBy)', function (): void {
     $user = User::factory()->create();
     $invite = TeamInvite::factory()->create(['invited_by' => $user->id]);
 
@@ -25,7 +25,7 @@ it('belongs to a user (invitedBy)', function () {
         ->and($invite->invitedBy->id)->toBe($user->id);
 });
 
-it('belongs to a team', function () {
+it('belongs to a team', function (): void {
     $team = Team::factory()->create();
     $invite = TeamInvite::factory()->create(['team_id' => $team->id]);
 
