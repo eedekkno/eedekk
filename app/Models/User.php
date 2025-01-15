@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Observers\UserObserver;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -53,6 +52,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Team::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Team, $this>
+     */
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class, 'current_team_id')->withDefault([
