@@ -23,21 +23,11 @@ class ConfirmablePasswordController extends Controller
 
     /**
      * Confirm the user's password.
-     *
-     * @codeCoverageIgnore
      */
     public function store(Request $request): RedirectResponse
     {
-        $user = $request->user();
-
-        if (! $user) {
-            throw ValidationException::withMessages([
-                'email' => __('auth.user_not_authenticated'),
-            ]);
-        }
-
         if (! Auth::guard('web')->validate([
-            'email' => $user->email,
+            'email' => $request->user()->email,
             'password' => $request->password,
         ])) {
             throw ValidationException::withMessages([

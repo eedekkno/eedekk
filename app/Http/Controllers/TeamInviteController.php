@@ -10,13 +10,12 @@ use App\Http\Requests\TeamInviteStoreRequest;
 use App\Mail\TeamInvitation;
 use App\Models\Team;
 use App\Models\TeamInvite;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class TeamInviteController extends Controller
 {
-    public function store(TeamInviteStoreRequest $request, Team $team): RedirectResponse
+    public function store(TeamInviteStoreRequest $request, Team $team)
     {
         $invite = $team->invites()->create([
             'email' => $request->email,
@@ -29,14 +28,14 @@ class TeamInviteController extends Controller
         return back()->withStatus('team-invited');
     }
 
-    public function destroy(TeamInviteDestroyRequest $request, Team $team, TeamInvite $teamInvite): RedirectResponse
+    public function destroy(TeamInviteDestroyRequest $request, Team $team, TeamInvite $teamInvite)
     {
         $teamInvite->delete();
 
         return redirect()->route('team.edit');
     }
 
-    public function accept(Request $request): RedirectResponse
+    public function accept(Request $request)
     {
         $invite = TeamInvite::where('token', $request->token)->firstOrFail();
 

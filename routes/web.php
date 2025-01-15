@@ -7,8 +7,6 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TeamInviteController;
 use App\Http\Controllers\TeamMemberController;
 use App\Http\Controllers\UserSetCurrentTeamController;
-use App\Livewire\CustomerCreate;
-use App\Livewire\CustomerIndex;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => view('welcome'));
@@ -19,10 +17,6 @@ Route::middleware('auth')->group(function (): void {
     Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    Route::get('customers', CustomerIndex::class)->name('customers.index');
-    Route::get('customers/create', CustomerCreate::class)->name('customers.create');
-    Route::get('customers/{customer}/edit', CustomerCreate::class)->name('customers.edit');
 
     Route::patch('teams/{team}/set', UserSetCurrentTeamController::class)->name('user.setTeam');
     Route::get('team', [TeamController::class, 'edit'])->name('team.edit');

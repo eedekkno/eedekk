@@ -13,9 +13,7 @@ class TeamInviteDestroyRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $user = $this->user();
-
-        return $user !== null && $user->can('revokeInvite', [$this->team, $this->teamInvite]);
+        return $this->user()->can('revokeInvite', [$this->team, $this->teamInvite]);
     }
 
     /**

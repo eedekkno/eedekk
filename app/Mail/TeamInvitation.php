@@ -34,10 +34,8 @@ class TeamInvitation extends Mailable
      */
     public function envelope(): Envelope
     {
-        $teamName = $this->teamInvite->team->name ?? 'unknown';
-
         return new Envelope(
-            subject: 'You have been invited to the '.$teamName.' team.',
+            subject: 'You have been invited to the '.$this->teamInvite->team->name.' team.',
         );
     }
 

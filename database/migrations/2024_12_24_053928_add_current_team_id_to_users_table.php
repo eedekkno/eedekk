@@ -10,8 +10,8 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table): void {
-            $table->after('email', function (Blueprint $table): void {
+        Schema::table('users', function (Blueprint $table) {
+            $table->after('email', function (Blueprint $table) {
                 $table->foreignId('current_team_id')->nullable()->constrained('teams');
             });
         });
@@ -19,7 +19,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table): void {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }

@@ -13,9 +13,7 @@ class TeamMemberDestroyRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $user = $this->user();
-
-        return $user !== null && $user->can('removeTeamMember', [$this->team, $this->user]);
+        return $this->user()->can('removeTeamMember', [$this->team, $this->user]);
     }
 
     /**
