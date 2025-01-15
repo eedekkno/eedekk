@@ -259,5 +259,12 @@
     "Yes": "Ja",
     "You are receiving this email because we received a password reset request for your account.": "Du får denne e-posten fordi vi har mottatt og forespørsel om å nullstille passordet til kontoen din.",
     "You're logged in!": "Du er logget inn!",
-    "Your email address is unverified.": "E-postadressen din er ubekreftet."
+    "Your email address is unverified.": "E-postadressen din er ubekreftet.",
+    "Customer": "Kunde",
+    "Customers": "Kunder",
+    "Create customer": "Opprett kunde",
+    "Address": "Adresse",
+    "City": "By",
+    "Phone": "Telefon",
+    "Type": "Type"
 }

@@ -13,7 +13,9 @@ class TeamUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->can('update', $this->team);
+        $user = $this->user();
+
+        return $user !== null && $user->can('update', $this->team);
     }
 
     /**
