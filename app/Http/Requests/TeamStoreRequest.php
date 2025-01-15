@@ -14,7 +14,9 @@ class TeamStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->can('create', Team::class);
+        $user = $this->user();
+
+        return $user !== null && $user->can('create', Team::class);
     }
 
     /**

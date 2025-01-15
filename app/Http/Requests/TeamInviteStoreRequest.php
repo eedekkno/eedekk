@@ -15,7 +15,9 @@ class TeamInviteStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->can('inviteToTeam', $this->team);
+        $user = $this->user();
+
+        return $user !== null && $user->can('inviteToTeam', $this->team);
     }
 
     /**
