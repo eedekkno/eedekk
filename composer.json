@@ -1,8 +1,7 @@
 {
-    "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
+    "name": "eedekkno/eedekk",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "System for Dekkhotell for Norwegian companies",
     "keywords": [
         "laravel",
         "framework"
