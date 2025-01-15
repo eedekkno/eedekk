@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\Models\Customer;
 use App\Models\Team;
 use App\Models\User;
 
@@ -79,5 +80,19 @@ class TeamPolicy
         }
 
         return $user->can('change member roles');
+    }
+
+    public function createCustomer(User $user, Team $team): bool
+    {
+        return $user->can('create customers');
+    }
+
+    public function updateCustomer(User $user, Team $team, Customer $customer): bool
+    {
+        if ($user->team->customers->doesntContain($customer)) {
+            return false;
+        }
+
+        return $user->can('update customers');
     }
 }

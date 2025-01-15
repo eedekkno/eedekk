@@ -3,8 +3,10 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictNativeCallRector;
 use RectorLaravel\Rector\Class_\AddExtendsAnnotationToModelFactoriesRector;
 use RectorLaravel\Rector\ClassMethod\AddGenericReturnTypeToRelationsRector;
+use RectorLaravel\Rector\If_\AbortIfRector;
 use RectorLaravel\Rector\MethodCall\EloquentWhereRelationTypeHintingParameterRector;
 
 return RectorConfig::configure()
@@ -15,6 +17,7 @@ return RectorConfig::configure()
         __DIR__.'/resources',
         __DIR__.'/routes',
         __DIR__.'/tests',
+        __DIR__.'/database',
     ])
     // uncomment to reach your current PHP version
     ->withPhpSets()
@@ -25,4 +28,6 @@ return RectorConfig::configure()
         AddExtendsAnnotationToModelFactoriesRector::class,
         AddGenericReturnTypeToRelationsRector::class,
         EloquentWhereRelationTypeHintingParameterRector::class,
+        AbortIfRector::class,
+        ReturnTypeFromStrictNativeCallRector::class,
     ]);
