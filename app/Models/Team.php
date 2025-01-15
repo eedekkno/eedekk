@@ -12,9 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-/**
- * @property TeamStatus $status
- */
 #[ObservedBy(TeamObserver::class)]
 class Team extends Model
 {
@@ -63,14 +60,6 @@ class Team extends Model
     public function freeTrialDaysLeft(): float
     {
         return now()->diffInDays($this->trial_ends_at);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Customer, $this>
-     */
-    public function customers(): HasMany
-    {
-        return $this->hasMany(Customer::class);
     }
 
     protected function casts(): array

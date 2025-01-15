@@ -13,9 +13,7 @@ class TeamLeaveRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $user = $this->user();
-
-        return $user !== null && $user->can('leave', $this->team);
+        return $this->user()->can('leave', $this->team);
     }
 
     /**

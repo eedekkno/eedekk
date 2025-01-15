@@ -13,9 +13,7 @@ class SetCurrentTeamRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $user = $this->user();
-
-        return $user !== null && $user->can('setCurrentTeam', $this->team);
+        return $this->user()->can('setCurrentTeam', $this->team);
     }
 
     /**
