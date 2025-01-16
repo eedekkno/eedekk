@@ -266,5 +266,22 @@
     "Address": "Adresse",
     "City": "By",
     "Phone": "Telefon",
-    "Type": "Type"
+    "Type": "Type",
+    "Notes": "Notater",
+    "Private": "Privat",
+    "Company": "Firma",
+    "Zip": "Postnummer",
+    "Postal City": "Poststed",
+    "Back": "Tilbake",
+    "Update customer": "Oppdater kunde",
+    "Team settings": "Team instillinger",
+    "Create team": "Opprett team",
+    "Change season": "Skift sesong",
+    "Print": "Skriv ut",
+    "Washed": "Vasket",
+    "Group": "Gruppe",
+    "Pricegroup": "Prisgruppe",
+    "Prices": "Priser",
+    "Create pricegroup": "Opprett prisgruppe",
+    "Create price": "Opprett pris"
 }

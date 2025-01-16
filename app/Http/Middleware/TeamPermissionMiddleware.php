@@ -17,12 +17,23 @@ class TeamPermissionMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($user = $request->user()) {
-            if (! is_null($user->current_team_id)) {
-                abort_unless($user->teams->contains($user->team), 403);
+        /** @var \App\Models\User|null $user */
+        $user = $request->user();
+
+        if ($user) {
+            /** @var \App\Models\Team|null $team */
+            $team = $user->team;
+
+            if ($user->current_team_id !== null) {
+                /** @var \App\Models\Team|null $team */
+                $teams = $user->teams;
+
+                abort_unless($team && $teams->contains($team), 403);
             }
 
-            setPermissionsTeamId($user->team->id);
+            if ($team) {
+                setPermissionsTeamId($team->id);
+            }
         }
 
         return $next($request);

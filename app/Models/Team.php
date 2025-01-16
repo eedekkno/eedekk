@@ -73,6 +73,22 @@ class Team extends Model
         return $this->hasMany(Customer::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Price, $this>
+     */
+    public function prices(): HasMany
+    {
+        return $this->hasMany(Price::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Pricegroup, $this>
+     */
+    public function pricegroups(): HasMany
+    {
+        return $this->hasMany(Pricegroup::class);
+    }
+
     protected function casts(): array
     {
         return [

@@ -152,6 +152,10 @@
                                     @endforeach
                                 </flux:radio.group>
                             </div>
+
+                            <div class="mb-2">
+                                <flux:editor wire:model="notes" label="{{ __('Notes') }}" />
+                            </div>
                         </div>
                         <!-- END Card Body -->
                     </div>

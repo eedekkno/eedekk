@@ -30,6 +30,7 @@ class CustomerFactory extends Factory
             'zip' => fake()->postcode(),
             'country' => fake()->country(),
             'type' => fake()->randomElement(['private', 'company']),
+            'notes' => fake()->paragraphs(2, true),
             'team_id' => Team::factory(),
         ];
     }

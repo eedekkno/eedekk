@@ -13,11 +13,48 @@ class CustomerIndex extends Component
 {
     use WithPagination;
 
+    public ?string $search = null;
+
+    /**
+     * @var array<string, array<string, mixed>>
+     */
+    protected array $queryString = [
+        'search' => [
+            'except' => '',
+        ],
+    ];
+
     #[Layout('layouts.app')]
     public function render(): View
     {
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+
+        /**
+         * @var \App\Models\Team $team
+         */
+        $team = $user->team;
+
+        $searchTerm = '%'.$this->search.'%';
+
+        /**
+         * @var \Illuminate\Contracts\Pagination\LengthAwarePaginator<\App\Models\Customer>
+         */
+        $customers = $team->customers()
+            ->when($this->search, function (\Illuminate\Contracts\Database\Query\Builder $query) use ($searchTerm): void {
+                $query->where(function ($query) use ($searchTerm): void {
+                    $query->where('name', 'like', $searchTerm)
+                        ->orWhere('address', 'like', $searchTerm)
+                        ->orWhere('city', 'like', $searchTerm)
+                        ->orWhere('email', 'like', $searchTerm)
+                        ->orWhere('phone', 'like', $searchTerm);
+                });
+            })
+            ->orderBy('name', 'asc')
+            ->paginate(25);
+
         return view('livewire.customers.index', [
-            'customers' => auth()->user()->team->customers()->orderBy('name', 'asc')->paginate(25),
+            'customers' => $customers,
         ]);
     }
 }

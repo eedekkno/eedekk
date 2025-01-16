@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Livewire\CustomerIndex;
 use App\Models\Customer;
 use App\Models\Team;
 use Livewire\Livewire;
@@ -74,4 +75,45 @@ it('does not show customers from other teams', function (): void {
     Livewire::actingAs($user)
         ->test(\App\Livewire\CustomerIndex::class)
         ->assertDontSee($customerInOtherTeam->name);
+});
+
+it('filters customers based on the search term', function (): void {
+    $user = $this->userWithTeam();
+
+    $customer1 = Customer::factory()->create([
+        'name' => 'Alice Smith',
+        'team_id' => $user->team->id,
+    ]);
+
+    $customer2 = Customer::factory()->create([
+        'name' => 'Bob Johnson',
+        'team_id' => $user->team->id,
+    ]);
+
+    $customer3 = Customer::factory()->create([
+        'name' => 'Charlie Brown',
+        'team_id' => $user->team->id,
+    ]);
+
+    // Simuler søk med Livewire
+    Livewire::actingAs($user)
+        ->test(CustomerIndex::class)
+        ->set('search', 'Alice')
+        ->assertSee('Alice Smith')
+        ->assertDontSee('Bob Johnson')
+        ->assertDontSee('Charlie Brown');
+
+    Livewire::actingAs($user)
+        ->test(CustomerIndex::class)
+        ->set('search', 'Charlie')
+        ->assertSee('Charlie Brown')
+        ->assertDontSee('Alice Smith')
+        ->assertDontSee('Bob Johnson');
+
+    Livewire::actingAs($user)
+        ->test(CustomerIndex::class)
+        ->set('search', 'Nonexistent')
+        ->assertDontSee('Alice Smith')
+        ->assertDontSee('Bob Johnson')
+        ->assertDontSee('Charlie Brown');
 });

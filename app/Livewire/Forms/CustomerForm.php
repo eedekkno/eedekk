@@ -31,4 +31,7 @@ class CustomerForm extends Form
 
     #[Validate('required', new Enum(CustomerType::class))]
     public string $type = CustomerType::PRIVATE->value;
+
+    #[Validate('nullable|string')]
+    public ?string $notes = null;
 }

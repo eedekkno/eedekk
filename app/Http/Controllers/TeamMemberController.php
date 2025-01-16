@@ -12,10 +12,13 @@ use Illuminate\Http\RedirectResponse;
 
 class TeamMemberController extends Controller
 {
+    /**
+     * Update the role of a team member.
+     */
     public function update(TeamMemberUpdateRequest $request, Team $team, User $user): RedirectResponse
     {
         if ($request->has('role')) {
-            tap($team->users->find($user), function (User $member) use ($request): void {
+            tap($team->users->find($user), function (?User $member) use ($request): void {
                 $member->roles()->detach();
                 $member->assignRole($request->role);
             });
@@ -24,6 +27,9 @@ class TeamMemberController extends Controller
         return back();
     }
 
+    /**
+     * Remove a team member from a team.
+     */
     public function destroy(TeamMemberDestroyRequest $request, Team $team, User $user): RedirectResponse
     {
         $team->users()->detach($user);

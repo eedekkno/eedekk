@@ -89,6 +89,7 @@ class CustomerCreate extends Component
                 'phone',
                 'email',
                 'type',
+                'notes',
             ]));
 
             // broadcast(new OrderUpdated($this->order))->toOthers();
@@ -99,7 +100,13 @@ class CustomerCreate extends Component
 
         }
 
-        $customer = auth()->user()->team->customers()->create($this->form->only([
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+
+        /** @var \App\Models\Team $team */
+        $team = $user->team;
+
+        $customer = $team->customers()->create($this->form->only([
             'name',
             'address',
             'zip',
@@ -107,6 +114,7 @@ class CustomerCreate extends Component
             'phone',
             'email',
             'type',
+            'notes',
         ]));
 
         flash()->success('Customer created successfully.');

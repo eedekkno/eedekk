@@ -87,9 +87,12 @@ class TeamPolicy
         return $user->can('create customers');
     }
 
+    /**
+     * Update a customer if the user has the appropriate permissions and belongs to the team.
+     */
     public function updateCustomer(User $user, Team $team, Customer $customer): bool
     {
-        if ($user->team->customers->doesntContain($customer)) {
+        if (! $user->team || $user->team->customers->doesntContain($customer)) {
             return false;
         }
 

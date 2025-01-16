@@ -16,13 +16,29 @@ class ChangeTeamDropdown extends Component
 
     public function mount(): void
     {
-        $this->teams = auth()->user()->teams;
-    }
-
-    public function changeTeam(Team $team): void
-    {
+        /** @var \App\Models\User $user */
         $user = auth()->user();
 
+        /** @var Collection<int, \App\Models\Team> $teams */
+        $teams = $user->teams;
+
+        $this->teams = $teams;
+    }
+
+    /**
+     * Change the current team for the authenticated user.
+     *
+     * @param  \App\Models\Team  $team  The team to switch to.
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If the team is not found in the user's teams.
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException If the user is not authorized to set the current team.
+     */
+    public function changeTeam(Team $team): void
+    {
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+
+        /** @var \App\Models\Team $team */
         $team = $user->teams()->findOrFail($team->id);
 
         abort_unless($user->can('setCurrentTeam', $team), 403, 'Du har ikke tillatelse til å bytte til dette teamet.');

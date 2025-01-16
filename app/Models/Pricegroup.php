@@ -4,36 +4,24 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Enums\CustomerType;
-use App\Traits\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Override;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Customer extends Model
+class Pricegroup extends Model
 {
-    /** @use HasFactory<\Database\Factories\CustomerFactory> */
+    /** @use HasFactory<\Database\Factories\PricegroupFactory> */
     use HasFactory;
 
-    use Uuid;
-
     /**
+     * The attributes that are mass assignable.
+     *
      * @var list<string>
      */
     protected $fillable = [
-        'uuid',
         'name',
-        'email',
-        'phone',
-        'address',
-        'city',
-        'state',
-        'country',
-        'zip',
-        'type',
         'team_id',
-        'notes',
     ];
 
     /**
@@ -44,16 +32,11 @@ class Customer extends Model
         return $this->belongsTo(Team::class);
     }
 
-    public function casts(): array
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Price, $this>
+     */
+    public function prices(): HasMany
     {
-        return [
-            'type' => CustomerType::class,
-        ];
-    }
-
-    #[Override]
-    public function getRouteKeyName(): string
-    {
-        return 'uuid';
+        return $this->hasMany(Price::class);
     }
 }

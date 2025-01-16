@@ -12,6 +12,10 @@
         </div>
     </div>
 
+    <div class="grow border-b border-gray-100 pb-5 dark:border-gray-700">
+        <flux:input wire:model.live.debounce.300ms="search" icon="magnifying-glass" placeholder="{{ __('Search') }}..." />
+    </div>
+
     <!-- Responsive Table Container -->
     <div
         class="min-w-full overflow-x-auto rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800"
@@ -65,8 +69,8 @@
 
             <!-- Table Body -->
             <tbody>
-            @foreach($customers as $customer)
-                <tr class="even:bg-gray-50 dark:even:bg-gray-900/50">
+            @foreach ($customers as $customer)
+                <tr class="even:bg-gray-50 dark:even:bg-gray-900/50" wire:key="{{ $customer->id }}">
                     <td class="p-3">
                         <p class="font-medium">{{ $customer->name }}</p>
                     </td>
@@ -87,7 +91,7 @@
             </tbody>
             <!-- END Table Body -->
         </table>
-        @if($customers->hasPages())
+        @if ($customers->hasPages())
             <div class="grow border-t border-gray-200 px-5 py-4 dark:border-gray-700">
                 <div class="text-center dark:text-gray-100">
                     {{ $customers->links() }}
