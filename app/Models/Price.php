@@ -48,8 +48,8 @@ class Price extends Model
     protected function price(): Attribute
     {
         return Attribute::make(
-            get: fn ($value): int|float => (! is_null($value)) ? $value / 100 : 0,
-            set: fn ($value): int|float => (! is_null($value)) ? ((float) $value) * 100 : 0,
+            get: fn (?int $value): int|float => $value !== null ? $value / 100 : 0,
+            set: fn (int|float|null $value): int => $value !== null ? (int) ((float) $value * 100) : 0,
         );
     }
 }

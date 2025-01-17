@@ -22,7 +22,7 @@ class CustomerCreate extends Component
     public CustomerForm $form;
 
     /** @var array<int, mixed>|null */
-    public $persons = null;
+    public ?array $persons = null;
 
     /** @codeCoverageIgnore  */
     public function lookupPhone(string $field): void

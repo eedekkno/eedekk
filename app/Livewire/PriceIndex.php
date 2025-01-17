@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -47,9 +48,9 @@ class PriceIndex extends Component
         $prices = $team->prices()
             ->with('pricegroup')
             ->join('pricegroups', 'prices.pricegroup_id', '=', 'pricegroups.id')
-            ->when($this->search, function (\Illuminate\Contracts\Database\Query\Builder $query): void {
+            ->when($this->search, function (Builder $query): void {
                 $searchTerm = '%'.$this->search.'%';
-                $query->where(function ($query) use ($searchTerm): void {
+                $query->where(function (Builder $query) use ($searchTerm): void {
                     $query->where('prices.name', 'like', $searchTerm)
                         ->orWhere('pricegroups.name', 'like', $searchTerm);
                 });

@@ -12,7 +12,7 @@ use Livewire\Component;
 class ChangeTeamDropdown extends Component
 {
     /** @var Collection<int, Team> */
-    public $teams;
+    public Collection $teams;
 
     public function mount(): void
     {

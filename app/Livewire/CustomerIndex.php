@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -41,8 +42,8 @@ class CustomerIndex extends Component
          * @var \Illuminate\Contracts\Pagination\LengthAwarePaginator<\App\Models\Customer>
          */
         $customers = $team->customers()
-            ->when($this->search, function (\Illuminate\Contracts\Database\Query\Builder $query) use ($searchTerm): void {
-                $query->where(function ($query) use ($searchTerm): void {
+            ->when($this->search, function (Builder $query) use ($searchTerm): void {
+                $query->where(function (Builder $query) use ($searchTerm): void {
                     $query->where('name', 'like', $searchTerm)
                         ->orWhere('address', 'like', $searchTerm)
                         ->orWhere('city', 'like', $searchTerm)
