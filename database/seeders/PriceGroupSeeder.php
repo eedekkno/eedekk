@@ -6,7 +6,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class PricegroupSeeder extends Seeder
+class PriceGroupSeeder extends Seeder
 {
     /**
      * Run the database seeds.

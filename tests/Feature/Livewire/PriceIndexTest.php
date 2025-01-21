@@ -8,8 +8,8 @@ use App\Models\Price;
 it('renders the price index component correctly', function (): void {
     $user = $this->userWithTeam();
 
-    $user->team->pricegroups()->create(['name' => 'Group A']);
-    $user->team->pricegroups()->first()->prices()->create(['name' => 'Test Price', 'price' => 5000, 'team_id' => $user->team->id]);
+    $user->team->priceGroups()->create(['name' => 'Group A']);
+    $user->team->priceGroups()->first()->prices()->create(['name' => 'Test Price', 'price' => 5000, 'team_id' => $user->team->id]);
 
     Livewire::actingAs($user)
         ->test(PriceIndex::class)
@@ -25,11 +25,11 @@ it('renders the price index component correctly', function (): void {
 it('filters prices by search query', function (): void {
     $user = $this->userWithTeam();
 
-    $groupA = $user->team->pricegroups()->create(['name' => 'Group A']);
-    $groupB = $user->team->pricegroups()->create(['name' => 'Group B']);
+    $groupA = $user->team->priceGroups()->create(['name' => 'Group A']);
+    $groupB = $user->team->priceGroups()->create(['name' => 'Group B']);
 
-    Price::factory()->create(['name' => 'Price A', 'pricegroup_id' => $groupA->id, 'price' => 3000, 'team_id' => $user->team->id]);
-    Price::factory()->create(['name' => 'Price B', 'pricegroup_id' => $groupB->id, 'price' => 4000, 'team_id' => $user->team->id]);
+    Price::factory()->create(['name' => 'Price A', 'price_group_id' => $groupA->id, 'price' => 3000, 'team_id' => $user->team->id]);
+    Price::factory()->create(['name' => 'Price B', 'price_group_id' => $groupB->id, 'price' => 4000, 'team_id' => $user->team->id]);
 
     Livewire::actingAs($user)
         ->test(PriceIndex::class)
@@ -47,9 +47,9 @@ it('filters prices by search query', function (): void {
 it('paginates results correctly', function (): void {
     $user = $this->userWithTeam();
 
-    $groupA = $user->team->pricegroups()->create(['name' => 'Group A']);
+    $groupA = $user->team->priceGroups()->create(['name' => 'Group A']);
 
-    Price::factory()->count(30)->create(['team_id' => $user->team->id, 'pricegroup_id' => $groupA->id]);
+    Price::factory()->count(30)->create(['team_id' => $user->team->id, 'price_group_id' => $groupA->id]);
 
     Livewire::actingAs($user)
         ->test(PriceIndex::class)

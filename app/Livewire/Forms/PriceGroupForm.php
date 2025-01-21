@@ -7,7 +7,7 @@ namespace App\Livewire\Forms;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
-class PricegroupForm extends Form
+class PriceGroupForm extends Form
 {
     #[Validate('required')]
     public string $name = '';

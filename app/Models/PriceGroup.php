@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Pricegroup extends Model
+class PriceGroup extends Model
 {
-    /** @use HasFactory<\Database\Factories\PricegroupFactory> */
+    /** @use HasFactory<\Database\Factories\PriceGroupFactory> */
     use HasFactory;
 
     /**

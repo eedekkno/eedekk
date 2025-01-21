@@ -72,6 +72,49 @@ it('can not remove self from team', function (): void {
         ->assertForbidden();
 });
 
+it('can not downgrade own role if no other team admin', function (): void {
+    $user = User::factory()->create();
+    $user->teams()->attach($team = Team::factory()->create());
+    $user->team()->associate($team)->save();
+
+    setPermissionsTeamId($user->team->id);
+
+    $user->assignRole(TeamRole::ADMIN);
+
+    actingAs($user)
+        ->patch(route('team.members.update', [$user->team, $user]), [
+            'role' => TeamRole::MEMBER->value,
+        ])
+        ->assertForbidden();
+
+    expect($user->fresh()->hasRole(TeamRole::ADMIN))
+        ->toBeTrue();
+});
+
+it('can downgrade own role if there is another team admin', function (): void {
+    $user = User::factory()->create();
+    $user->teams()->attach($team = Team::factory()->create());
+    $user->team()->associate($team)->save();
+
+    setPermissionsTeamId($user->team->id);
+
+    $user->assignRole(TeamRole::ADMIN);
+
+    $anotherUser = User::factory()->create();
+    $anotherUser->teams()->attach($team);
+    $anotherUser->team()->associate($team)->save();
+    $anotherUser->assignRole(TeamRole::ADMIN);
+
+    actingAs($user)
+        ->patch(route('team.members.update', [$user->team, $user]), [
+            'role' => TeamRole::MEMBER->value,
+        ])
+        ->assertRedirect();
+
+    expect($user->fresh()->hasRole(TeamRole::MEMBER))
+        ->toBeTrue();
+});
+
 it('updates a role', function (): void {
     $user = User::factory()->create();
     $user->teams()->attach($team = Team::factory()->create());

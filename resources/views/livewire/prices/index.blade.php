@@ -6,8 +6,13 @@
             <h3 class="mb-1 font-semibold">{{ __('Prices') }}</h3>
         </div>
         <div class="flex items-center justify-center gap-2">
-            <flux:button x-on:click="Livewire.dispatch('openModal', { component: 'modals.create-pricegroup' })">{{ __('Create pricegroup') }}</flux:button>
-            <flux:button x-on:click="Livewire.dispatch('openModal', { component: 'modals.create-price' })" variant="primary">{{ __('Create price') }}</flux:button>
+            <flux:button x-on:click="Livewire.dispatch('openModal', { component: 'modals.view-price-group' })">{{ __('View pricegroups') }}</flux:button>
+            <flux:button x-on:click="Livewire.dispatch('openModal', { component: 'modals.create-price-group' })">{{ __('Create pricegroup') }}</flux:button>
+            <flux:button
+                x-on:click="Livewire.dispatch('openModal', { component: 'modals.create-price' })"
+                x-on:keydown.meta.shift.p.window="Livewire.dispatch('openModal', { component: 'modals.create-price' })"
+                x-on:keydown.ctrl.shift.p.window="Livewire.dispatch('openModal', { component: 'modals.create-price' })"
+                variant="primary">{{ __('Create price') }}</flux:button>
         </div>
     </div>
 
@@ -56,12 +61,12 @@
                     <td class="p-3">
                         <p class="font-medium">{{ $price->name }}</p>
                     </td>
-                    <td class="p-3"><span class="cursor-pointer" x-on:click="Livewire.dispatch('openModal', { component: 'modals.create-pricegroup', arguments: { pricegroup: {{ $price->pricegroup->id }} }})">{{ $price->pricegroup->name }}</span></td>
+                    <td class="p-3">{{ $price->priceGroup->name }}</td>
                     <td class="p-3 text-right">
                         {{ Number::currency($price->price, in: 'NOK') }}
                     </td>
                     <td class="p-3 text-right">
-                        <flux:button size="xs" x-on:click="Livewire.dispatch('openModal', { component: 'modals.create-price', arguments: { price: {{ $price->id }} }})">Edit</flux:button>
+                        <flux:button size="xs" x-on:click="Livewire.dispatch('openModal', { component: 'modals.create-price', arguments: { price: {{ $price->id }} }})">{{ __('Edit') }}</flux:button>
                     </td>
                 </tr>
                 @endforeach
