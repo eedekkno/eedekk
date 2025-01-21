@@ -283,5 +283,9 @@
     "Pricegroup": "Prisgruppe",
     "Prices": "Priser",
     "Create pricegroup": "Opprett prisgruppe",
-    "Create price": "Opprett pris"
+    "Create price": "Opprett pris",
+    "Edit pricegroup": "Endre prisgruppe",
+    "Edit price": "Endre pris",
+    "View pricegroups": "Vis prisgrupper",
+    "PriceGroup":  "Prisgruppe"
 }

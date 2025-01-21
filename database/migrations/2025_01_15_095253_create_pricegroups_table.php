@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('pricegroups', function (Blueprint $table): void {
+        Schema::create('price_groups', function (Blueprint $table): void {
             $table->id();
             $table->string('name');
             $table->foreignId('team_id')->constrained()->cascadeOnDelete();

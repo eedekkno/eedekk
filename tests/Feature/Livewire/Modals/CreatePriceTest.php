@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use App\Livewire\Modals\CreatePrice;
 use App\Models\Price;
-use App\Models\Pricegroup;
+use App\Models\PriceGroup;
 use Livewire\Livewire;
 
 it('renders successfully', function (): void {
@@ -22,18 +22,18 @@ it('fills the form when a price is provided', function (): void {
     Livewire::test(CreatePrice::class, ['price' => $price])
         ->assertSet('form.name', $price->name)
         ->assertSet('form.price', $price->price)
-        ->assertSet('form.pricegroup_id', $price->pricegroup_id);
+        ->assertSet('form.price_group_id', $price->price_group_id);
 });
 
 it('creates a new price without decimal', function (): void {
     $this->actingAs($user = $this->userWithTeam());
 
-    $pricegroup = Pricegroup::factory()->for($user->team)->create();
+    $priceGroup = PriceGroup::factory()->for($user->team)->create();
 
     Livewire::test(CreatePrice::class)
         ->set('form.name', 'Test Price')
         ->set('form.price', '123')
-        ->set('form.pricegroup_id', $pricegroup->id)
+        ->set('form.price_group_id', $priceGroup->id)
         ->call('savePrice')
         ->assertDispatched('price-updated')
         ->assertDispatched('closeModal');
@@ -41,7 +41,7 @@ it('creates a new price without decimal', function (): void {
     $this->assertDatabaseHas('prices', [
         'name' => 'Test Price',
         'price' => 12300,
-        'pricegroup_id' => $pricegroup->id,
+        'price_group_id' => $priceGroup->id,
         'team_id' => $user->team->id,
     ]);
 });
@@ -49,12 +49,12 @@ it('creates a new price without decimal', function (): void {
 it('creates a new price with comma', function (): void {
     $this->actingAs($user = $this->userWithTeam());
 
-    $pricegroup = Pricegroup::factory()->for($user->team)->create();
+    $priceGroup = PriceGroup::factory()->for($user->team)->create();
 
     Livewire::test(CreatePrice::class)
         ->set('form.name', 'Test Price')
         ->set('form.price', '123,45')
-        ->set('form.pricegroup_id', $pricegroup->id)
+        ->set('form.price_group_id', $priceGroup->id)
         ->call('savePrice')
         ->assertDispatched('price-updated')
         ->assertDispatched('closeModal');
@@ -62,7 +62,7 @@ it('creates a new price with comma', function (): void {
     $this->assertDatabaseHas('prices', [
         'name' => 'Test Price',
         'price' => 12345,
-        'pricegroup_id' => $pricegroup->id,
+        'price_group_id' => $priceGroup->id,
         'team_id' => $user->team->id,
     ]);
 });
@@ -70,12 +70,12 @@ it('creates a new price with comma', function (): void {
 it('creates a new price with dot', function (): void {
     $this->actingAs($user = $this->userWithTeam());
 
-    $pricegroup = Pricegroup::factory()->for($user->team)->create();
+    $priceGroup = PriceGroup::factory()->for($user->team)->create();
 
     Livewire::test(CreatePrice::class)
         ->set('form.name', 'Test Price')
         ->set('form.price', '123.45')
-        ->set('form.pricegroup_id', $pricegroup->id)
+        ->set('form.price_group_id', $priceGroup->id)
         ->call('savePrice')
         ->assertDispatched('price-updated')
         ->assertDispatched('closeModal');
@@ -83,7 +83,7 @@ it('creates a new price with dot', function (): void {
     $this->assertDatabaseHas('prices', [
         'name' => 'Test Price',
         'price' => 12345,
-        'pricegroup_id' => $pricegroup->id,
+        'price_group_id' => $priceGroup->id,
         'team_id' => $user->team->id,
     ]);
 });
@@ -91,17 +91,17 @@ it('creates a new price with dot', function (): void {
 it('updates an existing price', function (): void {
     $this->actingAs($user = $this->userWithTeam());
 
-    $pricegroup = Pricegroup::factory()->for($user->team)->create();
+    $priceGroup = PriceGroup::factory()->for($user->team)->create();
     $price = Price::factory()->for($user->team)->create([
         'name' => 'Old Price',
         'price' => 5000,
-        'pricegroup_id' => $pricegroup->id,
+        'price_group_id' => $priceGroup->id,
     ]);
 
     Livewire::test(CreatePrice::class, ['price' => $price])
         ->set('form.name', 'Updated Price')
         ->set('form.price', '123,45')
-        ->set('form.pricegroup_id', $price->pricegroup_id)
+        ->set('form.price_group_id', $price->price_group_id)
         ->call('savePrice')
         ->assertDispatched('price-updated')
         ->assertDispatched('closeModal');
@@ -110,7 +110,7 @@ it('updates an existing price', function (): void {
         'id' => $price->id,
         'name' => 'Updated Price',
         'price' => 12345,
-        'pricegroup_id' => $price->pricegroup_id,
+        'price_group_id' => $price->price_group_id,
     ]);
 });
 
@@ -120,11 +120,11 @@ it('validates required fields', function (): void {
     Livewire::test(CreatePrice::class)
         ->set('form.name', '')
         ->set('form.price', '')
-        ->set('form.pricegroup_id', '')
+        ->set('form.price_group_id', '')
         ->call('savePrice')
         ->assertHasErrors([
             'form.name' => 'required',
             'form.price' => 'required',
-            'form.pricegroup_id' => 'required',
+            'form.price_group_id' => 'required',
         ]);
 });

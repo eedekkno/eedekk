@@ -14,7 +14,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedInteger('price');
-            $table->foreignId('pricegroup_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('price_group_id')->constrained()->cascadeOnDelete();
             $table->foreignId('team_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

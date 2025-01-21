@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\Enums\TeamRole;
 use App\Models\Customer;
 use App\Models\Team;
 use App\Models\User;
@@ -75,6 +76,12 @@ class TeamPolicy
 
     public function changeMemberRole(User $user, Team $team, User $member): bool
     {
+        if ($user->id === $member->id) {
+            return $team->users
+                ->filter(fn (User $teamMember) => $teamMember->hasRole(TeamRole::ADMIN->value))
+                ->count() >= 2;
+        }
+
         if ($team->users->doesntContain($member)) {
             return false;
         }

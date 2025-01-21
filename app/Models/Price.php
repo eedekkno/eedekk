@@ -23,7 +23,7 @@ class Price extends Model
         'name',
         'price',
         'team_id',
-        'pricegroup_id',
+        'price_group_id',
     ];
 
     /**
@@ -35,11 +35,11 @@ class Price extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Pricegroup, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\PriceGroup, $this>
      */
-    public function pricegroup(): BelongsTo
+    public function priceGroup(): BelongsTo
     {
-        return $this->belongsTo(Pricegroup::class);
+        return $this->belongsTo(PriceGroup::class);
     }
 
     /**

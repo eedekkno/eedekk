@@ -82,11 +82,11 @@ class Team extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Pricegroup, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\PriceGroup, $this>
      */
-    public function pricegroups(): HasMany
+    public function priceGroups(): HasMany
     {
-        return $this->hasMany(Pricegroup::class);
+        return $this->hasMany(PriceGroup::class);
     }
 
     protected function casts(): array

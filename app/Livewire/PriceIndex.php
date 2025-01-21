@@ -28,7 +28,7 @@ class PriceIndex extends Component
     /** @var string[] */
     protected $listeners = [
         'price-updated' => '$refresh',
-        'pricegroup-updated' => '$refresh',
+        'price-group-updated' => '$refresh',
     ];
 
     #[Layout('layouts.app')]
@@ -46,16 +46,16 @@ class PriceIndex extends Component
          * @var \Illuminate\Contracts\Pagination\LengthAwarePaginator<\App\Models\Price>
          */
         $prices = $team->prices()
-            ->with('pricegroup')
-            ->join('pricegroups', 'prices.pricegroup_id', '=', 'pricegroups.id')
+            ->with('priceGroup')
+            ->join('price_groups', 'prices.price_group_id', '=', 'price_groups.id')
             ->when($this->search, function (Builder $query): void {
                 $searchTerm = '%'.$this->search.'%';
                 $query->where(function (Builder $query) use ($searchTerm): void {
                     $query->where('prices.name', 'like', $searchTerm)
-                        ->orWhere('pricegroups.name', 'like', $searchTerm);
+                        ->orWhere('price_groups.name', 'like', $searchTerm);
                 });
             })
-            ->orderBy('pricegroups.name', 'asc')
+            ->orderBy('price_groups.name', 'asc')
             ->orderBy('prices.price', 'asc')
             ->select('prices.*')
             ->paginate(20);

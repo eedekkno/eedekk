@@ -14,7 +14,7 @@ class PriceForm extends Form
 
     public ?string $price = null;
 
-    public string $pricegroup_id;
+    public string $price_group_id;
 
     /**
      * @return array<string, mixed>
@@ -24,9 +24,9 @@ class PriceForm extends Form
         return [
             'name' => 'required|string',
             'price' => 'required|string|min:0',
-            'pricegroup_id' => [
+            'price_group_id' => [
                 'required',
-                Rule::exists('pricegroups', 'id')->where(function (Builder $query): void {
+                Rule::exists('price_groups', 'id')->where(function (Builder $query): void {
                     $query->where('team_id', auth()->user()->team->id);
                 }),
             ],

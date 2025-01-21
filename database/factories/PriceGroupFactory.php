@@ -8,9 +8,9 @@ use App\Models\Team;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Pricegroup>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PriceGroup>
  */
-class PricegroupFactory extends Factory
+class PriceGroupFactory extends Factory
 {
     /**
      * Define the model's default state.

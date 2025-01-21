@@ -31,7 +31,7 @@ class CreatePrice extends ModalComponent
         if (is_null($this->price)) {
             Price::create([
                 'name' => $this->form->name,
-                'pricegroup_id' => $this->form->pricegroup_id,
+                'price_group_id' => $this->form->price_group_id,
                 'team_id' => auth()->user()->team->id,
                 'price' => $this->form->price,
             ]);
@@ -42,7 +42,7 @@ class CreatePrice extends ModalComponent
             $this->price->update(
                 $this->form->only([
                     'name',
-                    'pricegroup_id',
+                    'price_group_id',
                     'price',
                 ])
             );
@@ -57,7 +57,7 @@ class CreatePrice extends ModalComponent
     public function render(): View
     {
         return view('livewire.modals.create-price', [
-            'pricegroups' => auth()->user()->team->pricegroups()->orderBy('name')->get(),
+            'priceGroups' => auth()->user()->team->priceGroups()->orderBy('name')->get(),
         ]);
     }
 }

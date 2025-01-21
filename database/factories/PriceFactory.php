@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\Pricegroup;
+use App\Models\PriceGroup;
 use App\Models\Team;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,7 +24,7 @@ class PriceFactory extends Factory
             'name' => fake()->name(),
             'price' => fake()->numberBetween(1000, 50000),
             'team_id' => Team::factory(),
-            'pricegroup_id' => Pricegroup::factory(),
+            'price_group_id' => PriceGroup::factory(),
         ];
     }
 }
