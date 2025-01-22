@@ -85,7 +85,7 @@ it('does not delete the price group if it contains a price', function (): void {
     $priceGroup = PriceGroup::factory()->for($user->team)->create();
 
     Price::factory()->for($user->team)->create([
-        'price_group_id' => $priceGroup->id
+        'price_group_id' => $priceGroup->id,
     ]);
 
     Livewire::test(CreatePriceGroup::class, ['priceGroup' => $priceGroup])
